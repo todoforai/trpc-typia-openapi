@@ -1,8 +1,6 @@
 // Core procedure helpers
 export {
-  withSchema,
-  createInput,
-  createOutput,
+  createParser,
   isTypiaParser,
   getSchemaFromParser,
   getFullSchemaFromParser,
@@ -37,6 +35,3 @@ export type {
   HttpMethod,
   ProcedureType,
 } from './types';
-
-// Re-export OpenAPI types for convenience
-export type { OpenAPIV3_1 } from 'openapi-types';

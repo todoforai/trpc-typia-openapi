@@ -1,7 +1,7 @@
 import type { TypiaParser, JsonSchemaCollection } from './types';
 
 /**
- * Wraps a Typia assertion function with its JSON schema for OpenAPI generation.
+ * Creates a tRPC-compatible parser from Typia's assert function and JSON schema.
  *
  * Since Typia requires compile-time transformation, you need to call both
  * typia.createAssert<T>() and typia.json.schemas<[T]>() and pass them to this helper.
@@ -9,26 +9,20 @@ import type { TypiaParser, JsonSchemaCollection } from './types';
  * @example
  * ```typescript
  * import typia from 'typia';
- * import { withSchema } from 'trpc-typia-openapi';
+ * import { createParser } from 'trpc-typia-openapi';
  *
  * interface CreateUserInput {
  *   name: string;
  *   email: string & tags.Format<"email">;
  * }
  *
- * // Create input parser with schema
- * const createUserInput = withSchema(
+ * const createUserInput = createParser(
  *   typia.createAssert<CreateUserInput>(),
  *   typia.json.schemas<[CreateUserInput], "3.1">()
  * );
- *
- * // Use in tRPC procedure
- * const procedure = t.procedure
- *   .input(createUserInput)
- *   .mutation(({ input }) => { ... });
  * ```
  */
-export function withSchema<T>(
+export function createParser<T>(
   assertFn: (input: unknown) => T,
   schema: JsonSchemaCollection
 ): TypiaParser<T> {
@@ -37,16 +31,6 @@ export function withSchema<T>(
   parser._isTypiaParser = true;
   return parser;
 }
-
-/**
- * Helper to create input parser - alias for withSchema with better semantics
- */
-export const createInput = withSchema;
-
-/**
- * Helper to create output parser - alias for withSchema with better semantics
- */
-export const createOutput = withSchema;
 
 /**
  * Checks if a parser is a Typia parser with embedded schema

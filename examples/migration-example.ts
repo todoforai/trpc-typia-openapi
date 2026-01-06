@@ -7,7 +7,7 @@
 
 import typia, { tags } from 'typia';
 import { initTRPC, TRPCError } from '@trpc/server';
-import { withSchema, type OpenApiMeta } from 'trpc-typia-openapi';
+import { createParser, type OpenApiMeta } from 'trpc-typia-openapi';
 
 // ============================================
 // STEP 1: Define TypeScript interfaces
@@ -67,37 +67,37 @@ interface SuccessResponse {
 // (these bundle validator + JSON schema)
 // ============================================
 
-const projectIdInput = withSchema(
+const projectIdInput = createParser(
   typia.createAssert<ProjectIdInput>(),
   typia.json.schemas<[ProjectIdInput], '3.1'>()
 );
 
-const projectCreateInput = withSchema(
+const projectCreateInput = createParser(
   typia.createAssert<ProjectCreateInput>(),
   typia.json.schemas<[ProjectCreateInput], '3.1'>()
 );
 
-const projectUpdateInput = withSchema(
+const projectUpdateInput = createParser(
   typia.createAssert<ProjectUpdateInput>(),
   typia.json.schemas<[ProjectUpdateInput], '3.1'>()
 );
 
-const shareProjectInput = withSchema(
+const shareProjectInput = createParser(
   typia.createAssert<ShareProjectInput>(),
   typia.json.schemas<[ShareProjectInput], '3.1'>()
 );
 
-const projectWithSettingsOutput = withSchema(
+const projectWithSettingsOutput = createParser(
   typia.createAssert<ProjectWithSettings>(),
   typia.json.schemas<[ProjectWithSettings], '3.1'>()
 );
 
-const projectResponseOutput = withSchema(
+const projectResponseOutput = createParser(
   typia.createAssert<ProjectResponse>(),
   typia.json.schemas<[ProjectResponse], '3.1'>()
 );
 
-const successOutput = withSchema(
+const successOutput = createParser(
   typia.createAssert<SuccessResponse>(),
   typia.json.schemas<[SuccessResponse], '3.1'>()
 );
@@ -129,11 +129,11 @@ export const projectRouter = t.router({
         summary: 'List all projects',
       },
     })
-    .input(withSchema(
+    .input(createParser(
       typia.createAssert<{}>(),
       typia.json.schemas<[{}], '3.1'>()
     ))
-    .output(withSchema(
+    .output(createParser(
       typia.createAssert<ProjectWithSettings[]>(),
       typia.json.schemas<[ProjectWithSettings[]], '3.1'>()
     ))
