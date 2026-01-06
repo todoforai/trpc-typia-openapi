@@ -5,6 +5,14 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/todoforai/trpc-typia-openapi.git"
+  },
+  "homepage": "https://github.com/todoforai/trpc-typia-openapi#readme",
+  "bugs": {
+    "url": "https://github.com/todoforai/trpc-typia-openapi/issues"
+  },
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
