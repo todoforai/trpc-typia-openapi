@@ -308,7 +308,11 @@ export function createOpenApiHandler<TContext>(
   const caller = (router as { createCaller: (ctx: TContext) => Record<string, unknown> }).createCaller;
 
   return async (req: OpenApiRequest): Promise<OpenApiResponse> => {
-    const { pathname } = parseUrl(req.url);
+    let { pathname } = parseUrl(req.url);
+    // Normalize trailing slash (e.g. /business-context/ -> /business-context)
+    if (pathname.length > 1 && pathname.endsWith('/')) {
+      pathname = pathname.slice(0, -1);
+    }
     const match = matchRoute(routes, req.method, pathname);
 
     if (!match) {
