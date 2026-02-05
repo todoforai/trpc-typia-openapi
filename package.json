@@ -1,6 +1,6 @@
 {
   "name": "trpc-typia-openapi",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "OpenAPI support for tRPC with Typia validation",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
